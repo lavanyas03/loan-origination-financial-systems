@@ -4,39 +4,28 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import utils.ConfigReader;
+import utils.WaitUtils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.Duration;
-import java.util.Properties;
 
 /**
  * BaseTest provides core test setup and teardown functionality.
  * All test classes should extend this class to inherit browser initialization and cleanup.
+ * Includes utilities for configuration, waits, and screenshots.
  */
 public class BaseTest {
     
     protected WebDriver driver;
     protected WebDriverWait wait;
-    protected Properties config;
+    protected ConfigReader config;
+    protected WaitUtils waitUtils;
     
     /**
-     * Constructor loads configuration properties
+     * Constructor loads configuration using ConfigReader
      */
     public BaseTest() {
-        config = new Properties();
-        loadConfiguration();
-    }
-    
-    /**
-     * Loads configuration from config.properties file
-     */
-    private void loadConfiguration() {
-        try (FileInputStream fis = new FileInputStream("src/main/resources/config.properties")) {
-            config.load(fis);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to load config.properties file: " + e.getMessage(), e);
-        }
+        config = ConfigReader.getInstance();
     }
     
     /**
@@ -45,16 +34,16 @@ public class BaseTest {
      */
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        // Get configuration values
+        // Get configuration values using ConfigReader
         String browserName = config.getProperty("browser", "chrome");
         String baseURL = config.getProperty("baseURL");
-        boolean headless = Boolean.parseBoolean(config.getProperty("headless", "false"));
-        boolean maximizeWindow = Boolean.parseBoolean(config.getProperty("maximizeWindow", "true"));
-        boolean clearCookies = Boolean.parseBoolean(config.getProperty("clearCookies", "true"));
+        boolean headless = config.getBooleanProperty("headless", false);
+        boolean maximizeWindow = config.getBooleanProperty("maximizeWindow", true);
+        boolean clearCookies = config.getBooleanProperty("clearCookies", true);
         
-        int implicitWait = Integer.parseInt(config.getProperty("implicitWait", "10"));
-        int explicitWait = Integer.parseInt(config.getProperty("explicitWait", "20"));
-        int pageLoadTimeout = Integer.parseInt(config.getProperty("pageLoadTimeout", "30"));
+        int implicitWait = config.getIntProperty("implicitWait", 10);
+        int explicitWait = config.getIntProperty("explicitWait", 20);
+        int pageLoadTimeout = config.getIntProperty("pageLoadTimeout", 30);
         
         // Create and configure WebDriver
         driver = BrowserFactory.createDriver(browserName, headless);
@@ -65,6 +54,9 @@ public class BaseTest {
         
         // Initialize explicit wait
         wait = new WebDriverWait(driver, Duration.ofSeconds(explicitWait));
+        
+        // Initialize WaitUtils
+        waitUtils = new WaitUtils(driver, explicitWait);
         
         // Clear cookies if configured
         if (clearCookies) {
@@ -91,6 +83,7 @@ public class BaseTest {
         BrowserFactory.quitDriver();
         driver = null;
         wait = null;
+        waitUtils = null;
     }
     
     /**
@@ -109,6 +102,24 @@ public class BaseTest {
      */
     public WebDriverWait getWait() {
         return wait;
+    }
+    
+    /**
+     * Gets the WaitUtils instance
+     * 
+     * @return WaitUtils instance
+     */
+    public WaitUtils getWaitUtils() {
+        return waitUtils;
+    }
+    
+    /**
+     * Gets the ConfigReader instance
+     * 
+     * @return ConfigReader instance
+     */
+    public ConfigReader getConfigReader() {
+        return config;
     }
     
     /**
