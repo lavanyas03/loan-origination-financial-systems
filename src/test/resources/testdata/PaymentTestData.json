@@ -1,0 +1,52 @@
+[
+  {
+    "testCaseId": "PAY_001",
+    "loanId": "LOAN_001",
+    "paymentAmount": "778.14",
+    "paymentDate": "2026-08-15",
+    "paymentMethod": "ACH",
+    "accountNumber": "****1234",
+    "expectedStatus": "Success",
+    "expectedBalance": "24221.86"
+  },
+  {
+    "testCaseId": "PAY_002",
+    "loanId": "LOAN_002",
+    "paymentAmount": "1773.40",
+    "paymentDate": "2026-08-01",
+    "paymentMethod": "Credit Card",
+    "accountNumber": "****5678",
+    "expectedStatus": "Success",
+    "expectedBalance": "348226.60"
+  },
+  {
+    "testCaseId": "PAY_003",
+    "loanId": "LOAN_003",
+    "paymentAmount": "867.64",
+    "paymentDate": "2026-08-10",
+    "paymentMethod": "Debit Card",
+    "accountNumber": "****9012",
+    "expectedStatus": "Success",
+    "expectedBalance": "44132.36"
+  },
+  {
+    "testCaseId": "PAY_004",
+    "loanId": "LOAN_001",
+    "paymentAmount": "100.00",
+    "paymentDate": "2026-08-20",
+    "paymentMethod": "ACH",
+    "accountNumber": "****1234",
+    "expectedStatus": "Partial Payment",
+    "expectedBalance": "24121.86"
+  },
+  {
+    "testCaseId": "PAY_005",
+    "loanId": "LOAN_004",
+    "paymentAmount": "685.81",
+    "paymentDate": "2026-08-25",
+    "paymentMethod": "Check",
+    "accountNumber": "****3456",
+    "expectedStatus": "Success",
+    "expectedBalance": "14314.19"
+  }
+]

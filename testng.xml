@@ -2,9 +2,55 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Loan Origination Test Suite" parallel="methods" thread-count="2" verbose="1">
     
+    <test name="Framework Validation Tests">
+        <classes>
+            <class name="tests.FrameworkValidationTest"/>
+        </classes>
+    </test>
+    
     <test name="Sample Tests">
         <classes>
             <class name="tests.SampleTest"/>
+        </classes>
+    </test>
+    
+    <test name="Customer Data-Driven Tests">
+        <classes>
+            <class name="tests.CustomerDataDrivenTest">
+                <methods>
+                    <include name="testCustomerValidationWithExcel"/>
+                    <include name="testCustomerValidationWithJSON"/>
+                    <include name="testCustomerProfileCompleteness"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="Loan Data-Driven Tests">
+        <classes>
+            <class name="tests.LoanDataDrivenTest">
+                <methods>
+                    <include name="testLoanApplicationWithExcel"/>
+                    <include name="testLoanApplicationWithJSON"/>
+                    <include name="testLoanProcessingWithExpectedResults"/>
+                    <include name="testLoanEligibility"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <test name="Payment Data-Driven Tests">
+        <classes>
+            <class name="tests.PaymentDataDrivenTest">
+                <methods>
+                    <include name="testPaymentProcessingWithExcel"/>
+                    <include name="testPaymentProcessingWithJSON"/>
+                    <include name="testPaymentDateValidation"/>
+                    <include name="testPaymentMethodConstraints"/>
+                    <include name="testBalanceCalculation"/>
+                    <include name="testPaymentTransactionProcessing"/>
+                </methods>
+            </class>
         </classes>
     </test>
     

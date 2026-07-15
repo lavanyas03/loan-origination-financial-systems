@@ -1,0 +1,62 @@
+[
+  {
+    "testCaseId": "LOAN_001",
+    "customerId": "CUST_001",
+    "loanType": "Personal",
+    "loanAmount": "25000",
+    "loanTerm": "36",
+    "interestRate": "7.5",
+    "purpose": "Debt Consolidation",
+    "collateral": "None",
+    "expectedStatus": "Approved",
+    "expectedMonthlyPayment": "778.14"
+  },
+  {
+    "testCaseId": "LOAN_002",
+    "customerId": "CUST_002",
+    "loanType": "Mortgage",
+    "loanAmount": "350000",
+    "loanTerm": "360",
+    "interestRate": "4.5",
+    "purpose": "Home Purchase",
+    "collateral": "Property",
+    "expectedStatus": "Approved",
+    "expectedMonthlyPayment": "1773.40"
+  },
+  {
+    "testCaseId": "LOAN_003",
+    "customerId": "CUST_003",
+    "loanType": "Auto",
+    "loanAmount": "45000",
+    "loanTerm": "60",
+    "interestRate": "5.9",
+    "purpose": "Vehicle Purchase",
+    "collateral": "Vehicle",
+    "expectedStatus": "Approved",
+    "expectedMonthlyPayment": "867.64"
+  },
+  {
+    "testCaseId": "LOAN_004",
+    "customerId": "CUST_004",
+    "loanType": "Personal",
+    "loanAmount": "15000",
+    "loanTerm": "24",
+    "interestRate": "9.5",
+    "purpose": "Home Improvement",
+    "collateral": "None",
+    "expectedStatus": "Approved",
+    "expectedMonthlyPayment": "685.81"
+  },
+  {
+    "testCaseId": "LOAN_005",
+    "customerId": "CUST_005",
+    "loanType": "Personal",
+    "loanAmount": "50000",
+    "loanTerm": "48",
+    "interestRate": "12.0",
+    "purpose": "Business",
+    "collateral": "None",
+    "expectedStatus": "Rejected",
+    "expectedMonthlyPayment": "0"
+  }
+]

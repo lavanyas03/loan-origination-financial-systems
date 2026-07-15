@@ -1,0 +1,42 @@
+[
+  {
+    "testCaseId": "LOAN_001",
+    "expectedApprovalStatus": "Approved",
+    "expectedInterestRate": "7.5",
+    "expectedMonthlyPayment": "778.14",
+    "expectedTotalPayment": "28013.04",
+    "expectedLoanOfficer": "John Smith"
+  },
+  {
+    "testCaseId": "LOAN_002",
+    "expectedApprovalStatus": "Approved",
+    "expectedInterestRate": "4.5",
+    "expectedMonthlyPayment": "1773.40",
+    "expectedTotalPayment": "638424.00",
+    "expectedLoanOfficer": "Sarah Johnson"
+  },
+  {
+    "testCaseId": "LOAN_003",
+    "expectedApprovalStatus": "Approved",
+    "expectedInterestRate": "5.9",
+    "expectedMonthlyPayment": "867.64",
+    "expectedTotalPayment": "52058.40",
+    "expectedLoanOfficer": "Michael Brown"
+  },
+  {
+    "testCaseId": "LOAN_004",
+    "expectedApprovalStatus": "Approved",
+    "expectedInterestRate": "9.5",
+    "expectedMonthlyPayment": "685.81",
+    "expectedTotalPayment": "16459.44",
+    "expectedLoanOfficer": "Emily Davis"
+  },
+  {
+    "testCaseId": "LOAN_005",
+    "expectedApprovalStatus": "Rejected",
+    "expectedInterestRate": "0",
+    "expectedMonthlyPayment": "0",
+    "expectedTotalPayment": "0",
+    "expectedLoanOfficer": "N/A"
+  }
+]
