@@ -609,6 +609,60 @@ public class CustomerRegistrationPage extends BasePage {
     }
     
     /**
+     * Extracts and returns the Customer ID from the success message
+     * Assumes the success message contains the Customer ID in a pattern like:
+     * "Customer registered successfully! Customer ID: CUST12345" or
+     * "Registration successful. Your Customer ID is: CUST12345"
+     * 
+     * @return the Customer ID extracted from the success message, or empty string if not found
+     */
+    public String getCustomerIdFromSuccessMessage() {
+        logger.debug("Extracting Customer ID from success message");
+        String successMsg = getSuccessMessageText();
+        
+        if (successMsg == null || successMsg.isEmpty()) {
+            logger.warn("Success message is empty, cannot extract Customer ID");
+            return "";
+        }
+        
+        logger.debug("Success message: {}", successMsg);
+        
+        // Try various patterns to extract Customer ID
+        // Pattern 1: "Customer ID: CUST12345" or "Customer ID:CUST12345"
+        String pattern1 = "Customer ID:\\s*([A-Z0-9]+)";
+        java.util.regex.Pattern p1 = java.util.regex.Pattern.compile(pattern1, java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher m1 = p1.matcher(successMsg);
+        if (m1.find()) {
+            String customerId = m1.group(1);
+            logger.info("Customer ID extracted: {}", customerId);
+            return customerId;
+        }
+        
+        // Pattern 2: "ID: CUST12345" or "ID:CUST12345"
+        String pattern2 = "\\bID:\\s*([A-Z0-9]+)";
+        java.util.regex.Pattern p2 = java.util.regex.Pattern.compile(pattern2, java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher m2 = p2.matcher(successMsg);
+        if (m2.find()) {
+            String customerId = m2.group(1);
+            logger.info("Customer ID extracted: {}", customerId);
+            return customerId;
+        }
+        
+        // Pattern 3: Any word starting with CUST followed by numbers
+        String pattern3 = "\\b(CUST\\d+)\\b";
+        java.util.regex.Pattern p3 = java.util.regex.Pattern.compile(pattern3, java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher m3 = p3.matcher(successMsg);
+        if (m3.find()) {
+            String customerId = m3.group(1);
+            logger.info("Customer ID extracted: {}", customerId);
+            return customerId;
+        }
+        
+        logger.warn("Could not extract Customer ID from success message: {}", successMsg);
+        return "";
+    }
+    
+    /**
      * Checks if error message is displayed
      * 
      * @return true if error message is displayed
