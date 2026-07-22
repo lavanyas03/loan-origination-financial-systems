@@ -65,6 +65,30 @@ public class TestDataProviders {
     }
     
     /**
+     * DataProvider for Customer Registration Validation test data from JSON
+     * Includes negative test scenarios for field validation testing
+     * 
+     * @return 2D Object array containing customer validation test data
+     */
+    @DataProvider(name = "customerValidationDataJSON")
+    public static Object[][] getCustomerValidationDataFromJSON() {
+        String filePath = TEST_DATA_PATH + "CustomerValidationTestData.json";
+        logger.info("Loading customer validation data from JSON: {}", filePath);
+        
+        try {
+            if (JSONUtils.validateJSONFile(filePath)) {
+                return JSONUtils.getDataAsObjectArray(filePath);
+            } else {
+                logger.error("Invalid or missing JSON file: {}", filePath);
+                return new Object[0][0];
+            }
+        } catch (Exception e) {
+            logger.error("Error loading customer validation data from JSON", e);
+            return new Object[0][0];
+        }
+    }
+    
+    /**
      * DataProvider for Loan module test data from Excel
      * 
      * @return 2D Object array containing loan test data

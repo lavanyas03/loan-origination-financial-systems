@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Customer Registration Validation Test Suite" parallel="false" thread-count="1" verbose="2">
+    
+    <listeners>
+        <listener class-name="listeners.ExtentReportListener"/>
+    </listeners>
+    
+    <!-- Customer Registration Validation Tests Only -->
+    <test name="Customer Registration Field Validation Tests">
+        <classes>
+            <class name="tests.CustomerRegistrationValidationTest">
+                <methods>
+                    <!-- Data-driven test: 27 validation scenarios from JSON -->
+                    <include name="testCustomerRegistrationFieldValidation"/>
+                    
+                    <!-- All mandatory fields empty test -->
+                    <include name="testAllMandatoryFieldsEmpty"/>
+                    
+                    <!-- Error message persistence test -->
+                    <include name="testErrorMessagePersistence"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- Test Groups Configuration -->
+    <test name="Validation Tests by Group">
+        <groups>
+            <run>
+                <include name="validation"/>
+                <include name="negative"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.CustomerRegistrationValidationTest"/>
+        </classes>
+    </test>
+    
+</suite>

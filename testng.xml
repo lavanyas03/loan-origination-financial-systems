@@ -36,6 +36,18 @@
         </classes>
     </test>
     
+    <test name="Customer Registration Validation Tests">
+        <classes>
+            <class name="tests.CustomerRegistrationValidationTest">
+                <methods>
+                    <include name="testCustomerRegistrationFieldValidation"/>
+                    <include name="testAllMandatoryFieldsEmpty"/>
+                    <include name="testErrorMessagePersistence"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
     <test name="Loan Data-Driven Tests">
         <classes>
             <class name="tests.LoanDataDrivenTest">
