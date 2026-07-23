@@ -89,6 +89,54 @@ public class TestDataProviders {
     }
     
     /**
+     * DataProvider for Customer Boundary Value test data from JSON
+     * Includes boundary test scenarios for testing edge cases and limits
+     * 
+     * @return 2D Object array containing customer boundary test data
+     */
+    @DataProvider(name = "customerBoundaryDataJSON")
+    public static Object[][] getCustomerBoundaryDataFromJSON() {
+        String filePath = TEST_DATA_PATH + "CustomerBoundaryTestData.json";
+        logger.info("Loading customer boundary test data from JSON: {}", filePath);
+        
+        try {
+            if (JSONUtils.validateJSONFile(filePath)) {
+                return JSONUtils.getDataAsObjectArray(filePath);
+            } else {
+                logger.error("Invalid or missing JSON file: {}", filePath);
+                return new Object[0][0];
+            }
+        } catch (Exception e) {
+            logger.error("Error loading customer boundary test data from JSON", e);
+            return new Object[0][0];
+        }
+    }
+    
+    /**
+     * DataProvider for Customer Duplicate test data from JSON
+     * Includes test scenarios for duplicate customer registration validation
+     * 
+     * @return 2D Object array containing customer duplicate test data
+     */
+    @DataProvider(name = "customerDuplicateDataJSON")
+    public static Object[][] getCustomerDuplicateDataFromJSON() {
+        String filePath = TEST_DATA_PATH + "CustomerDuplicateTestData.json";
+        logger.info("Loading customer duplicate test data from JSON: {}", filePath);
+        
+        try {
+            if (JSONUtils.validateJSONFile(filePath)) {
+                return JSONUtils.getDataAsObjectArray(filePath);
+            } else {
+                logger.error("Invalid or missing JSON file: {}", filePath);
+                return new Object[0][0];
+            }
+        } catch (Exception e) {
+            logger.error("Error loading customer duplicate test data from JSON", e);
+            return new Object[0][0];
+        }
+    }
+    
+    /**
      * DataProvider for Loan module test data from Excel
      * 
      * @return 2D Object array containing loan test data

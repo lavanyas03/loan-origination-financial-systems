@@ -24,16 +24,34 @@
         </classes>
     </test>
     
+    <!-- Customer Registration Duplicate and Boundary Tests -->
+    <test name="Customer Registration Duplicate and Boundary Tests">
+        <classes>
+            <class name="tests.CustomerRegistrationDuplicateBoundaryTest">
+                <methods>
+                    <!-- Duplicate customer registration test -->
+                    <include name="testDuplicateCustomerRegistration"/>
+                    
+                    <!-- Boundary value test -->
+                    <include name="testCustomerRegistrationBoundaryValues"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
     <!-- Test Groups Configuration -->
     <test name="Validation Tests by Group">
         <groups>
             <run>
                 <include name="validation"/>
                 <include name="negative"/>
+                <include name="boundary"/>
+                <include name="duplicate"/>
             </run>
         </groups>
         <classes>
             <class name="tests.CustomerRegistrationValidationTest"/>
+            <class name="tests.CustomerRegistrationDuplicateBoundaryTest"/>
         </classes>
     </test>
     
