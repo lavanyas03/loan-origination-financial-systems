@@ -94,12 +94,8 @@ public class PageObjectFrameworkTest extends BaseTest {
         googlePage.enterSearchQuery(searchQuery);
         logger.info("✓ type() method working - Entered search query: {}", searchQuery);
         
-        // Wait a moment for the page to process
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        // Wait for page to process using explicit wait
+        waitUtils.waitForPageToLoad();
         
         // Test click() method - Perform search
         googlePage.performSearch(searchQuery);

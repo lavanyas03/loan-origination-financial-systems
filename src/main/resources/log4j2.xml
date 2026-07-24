@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="LOG_DIR">logs</Property>
+    </Properties>
+    
+    <Appenders>
+        <!-- Console Appender - Logs to console with colored output -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%style{%d{yyyy-MM-dd HH:mm:ss.SSS}}{cyan} [%style{%t}{yellow}] %highlight{%-5level} %style{%logger{36}}{magenta} - %msg%n"/>
+        </Console>
+        
+        <!-- Rolling File Appender - All logs -->
+        <RollingFile name="AllLogsFile" 
+                     fileName="${LOG_DIR}/application.log"
+                     filePattern="${LOG_DIR}/application-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+        
+        <!-- Rolling File Appender - Test Execution logs -->
+        <RollingFile name="TestExecutionFile" 
+                     fileName="${LOG_DIR}/test-execution.log"
+                     filePattern="${LOG_DIR}/test-execution-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+        
+        <!-- Rolling File Appender - Error logs only -->
+        <RollingFile name="ErrorLogsFile" 
+                     fileName="${LOG_DIR}/errors.log"
+                     filePattern="${LOG_DIR}/errors-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+        
+        <!-- Rolling File Appender - Page Object logs -->
+        <RollingFile name="PageObjectFile" 
+                     fileName="${LOG_DIR}/page-objects.log"
+                     filePattern="${LOG_DIR}/page-objects-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="5MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </Appenders>
+    
+    <Loggers>
+        <!-- Test package loggers -->
+        <Logger name="tests" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="TestExecutionFile"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Logger>
+        
+        <!-- Page Object loggers -->
+        <Logger name="pages" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="PageObjectFile"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Logger>
+        
+        <!-- Base package loggers -->
+        <Logger name="base" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Logger>
+        
+        <!-- Listeners loggers -->
+        <Logger name="listeners" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Logger>
+        
+        <!-- Utils loggers -->
+        <Logger name="utils" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Logger>
+        
+        <!-- Root Logger -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AllLogsFile"/>
+            <AppenderRef ref="ErrorLogsFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

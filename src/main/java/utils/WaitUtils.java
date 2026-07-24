@@ -427,4 +427,25 @@ public class WaitUtils {
             Thread.currentThread().interrupt();
         }
     }
+    
+    /**
+     * Waits for page to complete loading (document.readyState === "complete")
+     * Uses JavaScript executor to check if page load is complete
+     */
+    public void waitForPageToLoad() {
+        try {
+            logger.debug("Waiting for page to load completely");
+            wait.until((ExpectedCondition<Boolean>) driver -> {
+                if (driver instanceof JavascriptExecutor) {
+                    JavascriptExecutor js = (JavascriptExecutor) driver;
+                    return js.executeScript("return document.readyState").equals("complete");
+                }
+                return true;
+            });
+            logger.debug("Page loaded successfully");
+        } catch (TimeoutException e) {
+            logger.error("Timeout waiting for page to load");
+            throw new TimeoutException("Page did not load after " + defaultTimeout + " seconds", e);
+        }
+    }
 }

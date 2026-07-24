@@ -6,21 +6,37 @@
         <listener class-name="listeners.ExtentReportListener"/>
     </listeners>
     
-    <test name="Page Object Framework Tests">
+    <!-- Customer Registration Regression Suite -->
+    <test name="Customer Registration - Happy Path">
         <classes>
-            <class name="tests.PageObjectFrameworkTest"/>
+            <class name="tests.CustomerRegistrationTest">
+                <methods>
+                    <include name="testSuccessfulCustomerRegistration"/>
+                </methods>
+            </class>
         </classes>
     </test>
     
-    <test name="Framework Validation Tests">
+    <test name="Customer Registration - Field Validation">
         <classes>
-            <class name="tests.FrameworkValidationTest"/>
+            <class name="tests.CustomerRegistrationValidationTest">
+                <methods>
+                    <include name="testCustomerRegistrationFieldValidation"/>
+                    <include name="testAllMandatoryFieldsEmpty"/>
+                    <include name="testErrorMessagePersistence"/>
+                </methods>
+            </class>
         </classes>
     </test>
     
-    <test name="Sample Tests">
+    <test name="Customer Registration - Duplicate and Boundary">
         <classes>
-            <class name="tests.SampleTest"/>
+            <class name="tests.CustomerRegistrationDuplicateBoundaryTest">
+                <methods>
+                    <include name="testDuplicateCustomerRegistration"/>
+                    <include name="testCustomerRegistrationBoundaryValues"/>
+                </methods>
+            </class>
         </classes>
     </test>
     
@@ -36,19 +52,27 @@
         </classes>
     </test>
     
-    <test name="Customer Registration Validation Tests">
+    <!-- Framework Validation Tests (Optional - for framework verification) -->
+    <test name="Page Object Framework Tests" enabled="false">
         <classes>
-            <class name="tests.CustomerRegistrationValidationTest">
-                <methods>
-                    <include name="testCustomerRegistrationFieldValidation"/>
-                    <include name="testAllMandatoryFieldsEmpty"/>
-                    <include name="testErrorMessagePersistence"/>
-                </methods>
-            </class>
+            <class name="tests.PageObjectFrameworkTest"/>
         </classes>
     </test>
     
-    <test name="Loan Data-Driven Tests">
+    <test name="Framework Validation Tests" enabled="false">
+        <classes>
+            <class name="tests.FrameworkValidationTest"/>
+        </classes>
+    </test>
+    
+    <test name="Sample Tests" enabled="false">
+        <classes>
+            <class name="tests.SampleTest"/>
+        </classes>
+    </test>
+    
+    <!-- Loan and Payment Tests (Disabled - Not part of Customer Registration suite) -->
+    <test name="Loan Data-Driven Tests" enabled="false">
         <classes>
             <class name="tests.LoanDataDrivenTest">
                 <methods>
@@ -61,7 +85,7 @@
         </classes>
     </test>
     
-    <test name="Payment Data-Driven Tests">
+    <test name="Payment Data-Driven Tests" enabled="false">
         <classes>
             <class name="tests.PaymentDataDrivenTest">
                 <methods>

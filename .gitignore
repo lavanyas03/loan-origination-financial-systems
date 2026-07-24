@@ -28,21 +28,21 @@ test-output/
 testng-results.xml
 testng-failed.xml
 
-# Test Reports
+# Test Reports (artifacts regenerated on each test run)
 reports/
 surefire-reports/
 failsafe-reports/
 
-# Logs
+# Logs (regenerated on each test run)
 logs/
 *.log
 *.log.*
 
-# Screenshots
-screenshots/
-*.png
-*.jpg
-*.jpeg
+# Screenshots (test artifacts - regenerated on each test run)
+screenshots/*.png
+screenshots/*.jpg
+screenshots/*.jpeg
+!screenshots/.gitkeep
 
 # Virtual machine crash logs
 hs_err_pid*

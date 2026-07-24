@@ -418,12 +418,8 @@ public class CustomerRegistrationValidationTest extends BaseTest {
         // Step 6: Verify error is cleared (success message or no error message)
         logger.info("Step 6: Verify validation error is cleared");
         
-        // Give some time for validation/submission to process
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            logger.warn("Thread sleep interrupted", e);
-        }
+        // Wait for validation/submission to process using explicit wait
+        waitUtils.waitForPageToLoad();
         
         // Error should either be cleared or success should be shown
         boolean successDisplayed = registrationPage.isSuccessMessageDisplayed();

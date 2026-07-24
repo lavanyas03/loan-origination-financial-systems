@@ -81,7 +81,7 @@ public class ExtentReportListener implements ITestListener {
     }
     
     /**
-     * Logs test success in the report
+     * Logs test success in the report and captures screenshot
      */
     @Override
     public void onTestSuccess(ITestResult result) {
@@ -90,6 +90,24 @@ public class ExtentReportListener implements ITestListener {
         ExtentTest test = extentTest.get();
         test.log(Status.PASS, MarkupHelper.createLabel(
             "Test Passed: " + result.getMethod().getMethodName(), ExtentColor.GREEN));
+        
+        // Capture screenshot on success
+        try {
+            WebDriver driver = getDriverFromTest(result);
+            if (driver != null) {
+                String screenshotPath = ScreenshotUtils.captureScreenshot(driver, result.getMethod().getMethodName());
+                if (screenshotPath != null) {
+                    test.addScreenCaptureFromPath(screenshotPath, "Test Passed - Final State");
+                    logger.info("Screenshot captured for passed test: {}", screenshotPath);
+                } else {
+                    logger.warn("Screenshot path is null for passed test");
+                }
+            } else {
+                logger.debug("WebDriver not found, screenshot not captured for passed test");
+            }
+        } catch (Exception e) {
+            logger.error("Failed to capture screenshot for passed test", e);
+        }
         
         // Log execution time
         long duration = (result.getEndMillis() - result.getStartMillis()) / 1000;
@@ -133,7 +151,7 @@ public class ExtentReportListener implements ITestListener {
     }
     
     /**
-     * Logs test skip in the report
+     * Logs test skip in the report and captures screenshot
      */
     @Override
     public void onTestSkipped(ITestResult result) {
@@ -147,10 +165,28 @@ public class ExtentReportListener implements ITestListener {
         if (result.getThrowable() != null) {
             test.skip("Skip Reason: " + result.getThrowable().getMessage());
         }
+        
+        // Capture screenshot on skip
+        try {
+            WebDriver driver = getDriverFromTest(result);
+            if (driver != null) {
+                String screenshotPath = ScreenshotUtils.captureScreenshot(driver, result.getMethod().getMethodName());
+                if (screenshotPath != null) {
+                    test.addScreenCaptureFromPath(screenshotPath, "Test Skipped - Current State");
+                    logger.info("Screenshot captured for skipped test: {}", screenshotPath);
+                } else {
+                    logger.warn("Screenshot path is null for skipped test");
+                }
+            } else {
+                logger.debug("WebDriver not found, screenshot not captured for skipped test");
+            }
+        } catch (Exception e) {
+            logger.error("Failed to capture screenshot for skipped test", e);
+        }
     }
     
     /**
-     * Logs test failure due to percentage of test passed
+     * Logs test failure due to percentage of test passed and captures screenshot
      */
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
@@ -159,6 +195,29 @@ public class ExtentReportListener implements ITestListener {
         
         ExtentTest test = extentTest.get();
         test.log(Status.WARNING, "Test Failed But Within Success Percentage");
+        
+        // Log failure reason if available
+        if (result.getThrowable() != null) {
+            test.warning("Reason: " + result.getThrowable().getMessage());
+        }
+        
+        // Capture screenshot
+        try {
+            WebDriver driver = getDriverFromTest(result);
+            if (driver != null) {
+                String screenshotPath = ScreenshotUtils.captureScreenshot(driver, result.getMethod().getMethodName());
+                if (screenshotPath != null) {
+                    test.addScreenCaptureFromPath(screenshotPath, "Test Failed Within Success % - Current State");
+                    logger.info("Screenshot captured for test failed within success percentage: {}", screenshotPath);
+                } else {
+                    logger.warn("Screenshot path is null for test failed within success percentage");
+                }
+            } else {
+                logger.debug("WebDriver not found, screenshot not captured");
+            }
+        } catch (Exception e) {
+            logger.error("Failed to capture screenshot for test failed within success percentage", e);
+        }
     }
     
     /**
